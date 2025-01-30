@@ -1,5 +1,6 @@
 export default function HomePage() {
   return (
-    <>Hello World</>
+    /** This must be replaced */
+    <></>
   );
 }
