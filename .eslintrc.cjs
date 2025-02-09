@@ -7,7 +7,9 @@ const config = {
   },
   // "ignorePatterns": ["*.css", "*.scss"],
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "react",
+    "react-hooks"
   ],
   "globals": {
     "React": "readonly"
