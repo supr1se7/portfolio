@@ -31,9 +31,9 @@ if [ ${#ts_files[@]} -gt 0 ]; then
   exit_status=$?
 
   if [ $exit_status -ne 0 ]; then
-    format_error "FAILED BUILD CRITICAL in TypeScript check
-$output" "${ts_files[0]}"
-    exit $exit_status
+    ts_output="Detected TypeScript errors:
+${output}"
+    ts_error=$exit_status
   else
     echo "✓ Successfully type checked TypeScript files"
   fi
@@ -42,13 +42,13 @@ fi
 # Run ESLint on all non-CSS files if there are any
 if [ ${#js_files[@]} -gt 0 ] || [ ${#ts_files[@]} -gt 0 ]; then
   all_js_files=("${js_files[@]}" "${ts_files[@]}")
-  eslint_output=$(npx eslint "${all_js_files[@]}" 2>&1)
+  eslint_output=$(npx eslint --format unix "${all_js_files[@]}" 2>&1)
   exit_status=$?
 
   if [ $exit_status -ne 0 ]; then
-    format_error "FAILED BUILD CRITICAL in ESLint check
-$eslint_output" "${all_js_files[0]}"
-    exit $exit_status
+    eslint_error=$exit_status
+    eslint_output="ESLint errors:
+${eslint_output}"
   fi
 fi
 
@@ -58,27 +58,51 @@ if [ ${#css_files[@]} -gt 0 ]; then
   exit_status=$?
 
   if [ $exit_status -ne 0 ]; then
-    format_error "FAILED BUILD CRITICAL in Stylelint check
-$stylelint_output" "${css_files[0]}"
-    exit $exit_status
+    stylelint_error=$exit_status
+    stylelint_output="Stylelint errors:
+${stylelint_output}"
   fi
 
-  # Run Tailwind and capture both output and exit status
+  # Run Tailwind check
   if [ -n "${css_files[0]}" ]; then
-    # Get the current file being processed
     current_file="${css_files[0]}"
-
-    # Redirect stderr to stdout and capture both in a variable
     output=$(npx tailwindcss -i "$current_file" 2>&1)
     exit_status=$?
 
-    # Check if the command failed
     if [ $exit_status -ne 0 ]; then
-      format_error "FAILED BUILD CRITICAL in file: $current_file
-$output" "$current_file"
-      exit $exit_status
+      tailwind_error=$exit_status
+      tailwind_output="Tailwind errors:
+${output}"
     else
       echo "✓ Successfully processed Tailwind CSS for: $current_file"
     fi
   fi
+fi
+
+# Combine and output all errors if any exist
+if [ -n "$ts_output" ] || [ -n "$eslint_output" ] || [ -n "$stylelint_output" ] || [ -n "$tailwind_output" ]; then
+  error_message=""
+  [ -n "$ts_output" ] && error_message+="${ts_output}
+
+===========================================
+
+"
+  [ -n "$eslint_output" ] && error_message+="${eslint_output}
+
+===========================================
+
+"
+  [ -n "$stylelint_output" ] && error_message+="${stylelint_output}
+
+===========================================
+
+"
+  [ -n "$tailwind_output" ] && error_message+="${tailwind_output}"
+
+  # Use the first available filename for the error message
+  error_file="${ts_files[0]:-${js_files[0]:-${css_files[0]}}}"
+  format_error "$error_message"
+
+  # Exit with the first error code we encountered
+  exit ${ts_error:-${eslint_error:-${stylelint_error:-${tailwind_error:-1}}}}
 fi
