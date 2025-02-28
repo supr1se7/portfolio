@@ -35,7 +35,8 @@
         "color-function-notation": null,
         "alpha-value-notation": null,
         "declaration-empty-line-before": null,
-        "font-family-name-quotes": null
+        "font-family-name-quotes": null,
+        "keyframes-name-pattern": null
     },
     "overrides": [{
         "files": [
