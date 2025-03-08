@@ -20,7 +20,7 @@ export const DiscordCard = () => {
           className="w-32 h-32 rounded-full border-4 border-card overflow-hidden"
         >
           <img
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=256"
+            src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
             alt="supr1se"
             className="w-full h-full object-cover"
           />
