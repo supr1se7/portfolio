@@ -3,7 +3,7 @@
 import { AnimatedText } from "@/components/AnimatedText";
 import { DiscordCard } from "@/components/DiscordCard";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { IconCode, IconUsers, IconTerminal2 } from "@tabler/icons-react";
+import { IconCode, IconUsers, IconTerminal2, IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
