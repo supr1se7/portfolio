@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatedText } from "@/components/AnimatedText";
+import { DiscordCard } from "@/components/DiscordCard";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
+import { IconCode, IconUsers, IconTerminal2 } from "@tabler/icons-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -36,28 +37,21 @@ export default function HomePage() {
         style={{ scaleX }}
       />
       
-      <section className="h-screen flex flex-col items-center justify-center px-4">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="w-32 h-32 rounded-full overflow-hidden mb-8"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=256"
-            alt="Profile"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_50%)] opacity-10" />
         
+        <div className="mb-16">
+          <DiscordCard />
+        </div>
+
         <AnimatedText
-          text="Olá, eu sou um Desenvolvedor"
-          className="text-4xl font-bold text-primary mb-4 text-center"
+          text="Hack the Planet"
+          className="text-6xl font-bold text-primary mb-4 text-center font-mono"
         />
         
         <AnimatedText
-          text="Criando experiências digitais únicas"
-          className="text-xl text-muted-foreground mb-8 text-center"
+          text="Building the Future Through Code"
+          className="text-xl text-muted-foreground mb-12 text-center font-mono"
         />
         
         <motion.div
@@ -86,28 +80,34 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      <section className="min-h-screen py-20 px-4">
+      <section className="min-h-screen py-20 px-4 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_50%)] opacity-10" />
+        
         <div className="max-w-4xl mx-auto">
           <AnimatedText
-            text="Projetos em Destaque"
-            className="text-3xl font-bold text-primary mb-12 text-center"
+            text="Community Stats"
+            className="text-3xl font-bold text-primary mb-12 text-center font-mono"
           />
           
-          <div className="grid gap-8">
-            {[1, 2, 3].map((_, index) => (
+          <div className="grid grid-cols-3 gap-8">
+            {[
+              { icon: IconCode, title: "Lines of Code", value: "100K+" },
+              { icon: IconUsers, title: "Community Members", value: "1000+" },
+              { icon: IconTerminal2, title: "Hacks Completed", value: "50+" }
+            ].map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="bg-card p-6 rounded-lg shadow-lg"
+                className="bg-card p-6 rounded-lg shadow-lg border border-primary/20 group hover:border-primary/40 transition-colors"
               >
-                <h3 className="text-xl font-semibold mb-2">Projeto {index + 1}</h3>
-                <p className="text-muted-foreground">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <div className="flex flex-col items-center text-center">
+                  <item.icon size={48} className="text-primary mb-4" />
+                  <h3 className="text-xl font-semibold mb-2 text-primary font-mono">{item.title}</h3>
+                  <p className="text-4xl font-bold text-muted-foreground font-mono">{item.value}</p>
+                </div>
               </motion.div>
             ))}
           </div>
