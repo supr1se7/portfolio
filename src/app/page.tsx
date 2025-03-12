@@ -3,6 +3,7 @@
 import { AnimatedText } from "@/components/AnimatedText";
 import { WeightCalculator } from "@/components/WeightCalculator";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { IconBrandGithub, IconBrandLinkedin, IconMail, IconCode, IconUsers, IconTerminal2 } from "@tabler/icons-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
