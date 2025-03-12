@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatedText } from "@/components/AnimatedText";
-import { DiscordCard } from "@/components/DiscordCard";
+import { WeightCalculator } from "@/components/WeightCalculator";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { IconCode, IconUsers, IconTerminal2, IconBrandGithub, IconBrandLinkedin, IconMail } from "@tabler/icons-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -40,19 +39,17 @@ export default function HomePage() {
       <section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_50%)] opacity-10" />
         
-        <div className="mb-16">
-          <DiscordCard />
-        </div>
-
         <AnimatedText
-          text="Hack the Planet"
+          text="Calculadora de Peso Ideal"
           className="text-6xl font-bold text-primary mb-4 text-center font-mono"
         />
         
         <AnimatedText
-          text="Building the Future Through Code"
+          text="Descubra seu IMC e peso ideal"
           className="text-xl text-muted-foreground mb-12 text-center font-mono"
         />
+
+        <WeightCalculator />
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}
