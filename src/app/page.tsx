@@ -1,56 +1,27 @@
 "use client";
 
-import { AnimatedText } from "@/components/AnimatedText";
-import { WeightCalculator } from "@/components/WeightCalculator";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { IconBrandGithub, IconBrandLinkedin, IconMail, IconCode, IconUsers, IconTerminal2 } from "@tabler/icons-react";
-import { motion, useScroll, useSpring } from "framer-motion";
-import { useEffect, useState } from "react";
+import { MemeGenerator } from "@/components/MemeGenerator";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center bg-background">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
   return (
-    <main className="min-h-screen bg-background">
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-50"
-        style={{ scaleX }}
-      />
+    <main className="min-h-screen bg-background py-20">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--accent)_0%,_transparent_70%)] opacity-20" />
       
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_50%)] opacity-10" />
-        
-        <AnimatedText
-          text="Calculadora de Peso Ideal"
-          className="text-6xl font-bold text-primary mb-4 text-center font-mono"
-        />
-        
-        <AnimatedText
-          text="Descubra seu IMC e peso ideal"
-          className="text-xl text-muted-foreground mb-12 text-center font-mono"
-        />
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-12"
+      >
+        <h1 className="text-6xl font-bold text-foreground mb-4">
+          Meme Generator 9000
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          Crie memes épicos em segundos! 🚀
+        </p>
+      </motion.div>
 
-        <WeightCalculator />
+      <MemeGenerator />
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}
