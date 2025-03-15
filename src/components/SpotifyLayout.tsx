@@ -198,7 +198,7 @@ export const SpotifyLayout = () => {
                 className="w-[80px] h-[80px] rounded-full overflow-hidden"
               >
                 <img
-                  src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
+                  src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/f73a68cac47a0b62dc3ac2ac279ca7d6.jpg"
                   alt="supr1se"
                   className="w-full h-full object-cover"
                 />
