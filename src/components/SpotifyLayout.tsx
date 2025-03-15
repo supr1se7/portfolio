@@ -88,7 +88,10 @@ export const SpotifyLayout = () => {
     setPlayer(player);
     player.setVolume(volume * 100);
     player.playVideo();
-    setIsLoading(false);
+    // Atrasa a remoção do loading por 2 segundos
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   };
 
   const onStateChange = (event: any) => {
@@ -111,6 +114,7 @@ export const SpotifyLayout = () => {
       const nextIndex = (currentVideoIndex + 1) % videos.length;
       setCurrentVideoIndex(nextIndex);
       player.loadVideoById(videos[nextIndex]);
+      player.playVideo(); // Inicia a reprodução automaticamente
     }
   };
 
@@ -120,7 +124,12 @@ export const SpotifyLayout = () => {
       {/* Main content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="w-64 bg-black p-6 flex flex-col gap-6">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 2.2 }}
+          className="w-64 bg-black p-6 flex flex-col gap-6"
+        >
           {/* Menu */}
           <div className="space-y-4">
             {menuItems.map((item) => (
@@ -152,10 +161,15 @@ export const SpotifyLayout = () => {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Main content area */}
-        <div className="flex-1 bg-gradient-to-b from-[#535353] to-[#121212] overflow-y-auto flex flex-col items-center justify-center p-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 2.2 }}
+          className="flex-1 bg-gradient-to-b from-[#535353] to-[#121212] overflow-y-auto flex flex-col items-center justify-center p-8"
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -195,11 +209,16 @@ export const SpotifyLayout = () => {
               </div>
             </motion.div>
           </motion.div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Player */}
-      <div className="h-28 bg-black border-t border-[#282828] px-8 flex items-center justify-between">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 2.2 }}
+        className="h-28 bg-black border-t border-[#282828] px-8 flex items-center justify-between"
+      >
         {/* Current track */}
         <div className="flex items-center gap-4 w-[300px]">
           <div className="w-14 h-14 rounded overflow-hidden">
