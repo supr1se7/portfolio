@@ -14,7 +14,7 @@ import {
   IconArrowsShuffle,
 } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
-import useSound from "use-sound";
+import { useSound } from "use-sound";
 
 const menuItems = [
   { icon: IconHome, text: "Home" },
