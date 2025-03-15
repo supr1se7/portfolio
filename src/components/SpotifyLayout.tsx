@@ -17,17 +17,17 @@ import { useState, useEffect } from "react";
 import { useSound } from "use-sound";
 
 const menuItems = [
-  { icon: IconHome, text: "Home" },
-  { icon: IconSearch, text: "Search" },
-  { icon: IconLibrary, text: "Your Library" },
+  { icon: IconHome, text: "Início" },
+  { icon: IconSearch, text: "Buscar" },
+  { icon: IconLibrary, text: "Sua Biblioteca" },
 ];
 
 const playlists = [
-  "Liked Songs",
-  "Your Top Songs 2023",
-  "Discover Weekly",
-  "Release Radar",
-  "Daily Mix 1",
+  "Músicas Curtidas",
+  "Suas Músicas 2023",
+  "Descobertas da Semana",
+  "Radar de Novidades",
+  "Mix Diário 1",
 ];
 
 export const SpotifyLayout = () => {
@@ -100,27 +100,22 @@ export const SpotifyLayout = () => {
             </div>
           </div>
 
-          {/* Recent activity */}
-          <h2 className="text-2xl font-bold mb-6">Recently Played</h2>
-          <div className="grid grid-cols-5 gap-6">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                className="bg-[#181818] p-4 rounded-lg hover:bg-[#282828] transition-colors"
-              >
-                <div className="aspect-square mb-4 rounded-lg overflow-hidden">
-                  <img
-                    src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
-                    alt="Album cover"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="font-semibold mb-1">Track {i + 1}</h3>
-                <p className="text-gray-400 text-sm">supr1se</p>
-              </motion.div>
-            ))}
-          </div>
+          {/* Current Album */}
+          <h2 className="text-2xl font-bold mb-6">Tocando Agora</h2>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-[#181818] p-6 rounded-lg hover:bg-[#282828] transition-colors max-w-2xl"
+          >
+            <div className="aspect-square mb-6 rounded-lg overflow-hidden shadow-2xl">
+              <img
+                src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
+                alt="Capa do álbum"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">supr1se - Faixa Atual</h3>
+            <p className="text-gray-400">Álbum • 2024</p>
+          </motion.div>
         </div>
       </div>
 
@@ -136,8 +131,8 @@ export const SpotifyLayout = () => {
             />
           </div>
           <div>
-            <h4 className="font-semibold">Current Track</h4>
-            <p className="text-gray-400 text-sm">supr1se</p>
+            <h4 className="font-semibold">Faixa Atual</h4>
+            <p className="text-gray-400 text-sm">supr1se • Álbum</p>
           </div>
         </div>
 
