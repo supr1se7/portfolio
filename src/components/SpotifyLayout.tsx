@@ -211,7 +211,7 @@ export const SpotifyLayout = () => {
             </motion.div>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Player */}
       <motion.div 
@@ -350,7 +350,7 @@ export const SpotifyLayout = () => {
             }}
           />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
