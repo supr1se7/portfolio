@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import useSound from "use-sound";
+import { useSound } from "use-sound";
 
 export const DiscordProfile = () => {
   const [isPlaying, setIsPlaying] = useState(false);
