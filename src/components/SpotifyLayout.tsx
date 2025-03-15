@@ -106,6 +106,7 @@ export const SpotifyLayout = () => {
       const prevIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
       setCurrentVideoIndex(prevIndex);
       player.loadVideoById(videos[prevIndex]);
+      player.playVideo(); // Inicia a reprodução automaticamente
     }
   };
 
