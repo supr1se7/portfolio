@@ -213,11 +213,11 @@ export const SpotifyLayout = () => {
               whileHover={{ scale: 1.02 }}
               className="bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
             >
-              <div className="h-[400px]">
+              <div className="w-[400px] h-[400px] mx-auto">
                 <img
                   src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/4245999e73ecddf5ae5c3473a6bf2351.jpg"
                   alt="Capa do álbum"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-md"
                 />
               </div>
               <div className="p-6">
