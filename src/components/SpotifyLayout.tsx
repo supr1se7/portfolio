@@ -95,9 +95,15 @@ export const SpotifyLayout = () => {
   };
 
   const onStateChange = (event: any) => {
-    setIsPlaying(event.data === 1);
-    if (event.data === 0) { // Video ended
+    // YT.PlayerState.PLAYING = 1
+    // YT.PlayerState.ENDED = 0
+    if (event.data === 1) {
+      setIsPlaying(true);
+    } else if (event.data === 0) {
       handleNextTrack();
+    } else {
+      // Não alterar o estado isPlaying para outros eventos
+      // Isso mantém o estado anterior quando carrega nova música
     }
   };
 
@@ -105,8 +111,13 @@ export const SpotifyLayout = () => {
     if (player) {
       const prevIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
       setCurrentVideoIndex(prevIndex);
-      player.loadVideoById(videos[prevIndex]);
-      player.playVideo(); // Inicia a reprodução automaticamente
+      // Usar cueVideoById em vez de loadVideoById mantém o estado de reprodução
+      if (isPlaying) {
+        player.loadVideoById(videos[prevIndex]);
+      } else {
+        player.cueVideoById(videos[prevIndex]);
+        player.playVideo();
+      }
     }
   };
 
@@ -114,8 +125,13 @@ export const SpotifyLayout = () => {
     if (player) {
       const nextIndex = (currentVideoIndex + 1) % videos.length;
       setCurrentVideoIndex(nextIndex);
-      player.loadVideoById(videos[nextIndex]);
-      player.playVideo(); // Inicia a reprodução automaticamente
+      // Usar cueVideoById em vez de loadVideoById mantém o estado de reprodução
+      if (isPlaying) {
+        player.loadVideoById(videos[nextIndex]);
+      } else {
+        player.cueVideoById(videos[nextIndex]);
+        player.playVideo();
+      }
     }
   };
 
@@ -309,7 +325,7 @@ export const SpotifyLayout = () => {
                 width: "1",
                 height: "1",
                 playerVars: {
-                  autoplay: 0,
+                  autoplay: 1,
                 },
               }}
               onReady={onReady}
