@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CreativeLoader } from "./CreativeLoader";
+import { ViewCounter } from "./ViewCounter";
 import {
   IconHome,
   IconSearch,
@@ -138,6 +139,7 @@ export const SpotifyLayout = () => {
   return (
     <div className="h-screen bg-[#121212] text-white flex flex-col">
       {isLoading && <CreativeLoader />}
+      <ViewCounter />
       {/* Main content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
