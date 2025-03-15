@@ -32,7 +32,7 @@ const playlists = [
 
 export const SpotifyLayout = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(0.5);
   const [progress, setProgress] = useState(0);
   const [player, setPlayer] = useState<any>(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -55,10 +55,10 @@ export const SpotifyLayout = () => {
   }, [player, isPlaying]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseInt(e.target.value);
+    const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
     if (player) {
-      player.setVolume(newVolume);
+      player.setVolume(newVolume * 100); // YouTube API espera volume de 0-100
     }
   };
 
@@ -278,7 +278,26 @@ export const SpotifyLayout = () => {
             step="0.01"
             value={volume}
             onChange={handleVolumeChange}
-            className="w-24 h-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+            className="w-24 h-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer 
+              [&::-webkit-slider-thumb]:appearance-none 
+              [&::-webkit-slider-thumb]:w-3 
+              [&::-webkit-slider-thumb]:h-3 
+              [&::-webkit-slider-thumb]:rounded-full 
+              [&::-webkit-slider-thumb]:bg-white
+              [&::-webkit-slider-thumb]:mt-[-4px]
+              hover:bg-[#666666]
+              relative
+              before:absolute
+              before:content-['']
+              before:left-0
+              before:top-0
+              before:h-full
+              before:bg-white
+              before:rounded-full"
+            style={{
+              backgroundSize: `${volume * 100}% 100%`,
+              backgroundImage: 'linear-gradient(#fff, #fff)'
+            }}
           />
         </div>
       </div>
