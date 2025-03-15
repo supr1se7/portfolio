@@ -213,7 +213,7 @@ export const SpotifyLayout = () => {
               whileHover={{ scale: 1.02 }}
               className="bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
             >
-              <div className="w-[400px] h-[400px] mx-auto">
+              <div className="w-[350px] h-[350px] mx-auto">
                 <img
                   src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/1754d86dccb714f079f6b6cd3cf8a64f.jpg"
                   alt="Capa do álbum"
@@ -221,8 +221,26 @@ export const SpotifyLayout = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-1">supr1se - Faixa Atual</h3>
-                <p className="text-gray-400">Álbum • 2024</p>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {["Dinheiro não aceita desaforo.", "Ou você faz ele trabalhar pra você,", "ou vai passar a vida trabalhando por ele."].map((text, index) => (
+                    <motion.p
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: index * 0.8
+                      }}
+                      className={`text-xl ${index === 0 ? 'font-bold text-[#1DB954]' : 'text-gray-400'}`}
+                    >
+                      {text}
+                    </motion.p>
+                  ))}
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>
