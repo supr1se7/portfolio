@@ -22,12 +22,12 @@ const menuItems = [
   { icon: IconLibrary, text: "Sua Biblioteca" },
 ];
 
-const playlists = [
-  "Músicas Curtidas",
-  "Suas Músicas 2023",
-  "Descobertas da Semana",
-  "Radar de Novidades",
-  "Mix Diário 1",
+const portfolioSections = [
+  "Sobre Mim",
+  "Projetos",
+  "Experiência",
+  "Tecnologias",
+  "Contato",
 ];
 
 export const SpotifyLayout = () => {
@@ -37,8 +37,12 @@ export const SpotifyLayout = () => {
   const [player, setPlayer] = useState<any>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
-  const playlistId = "PL6a4NQi-gOKi7Z4Hq58TvaN8vwZhuHlaQ";
+  const videos = [
+    "9Zmpqwcmy2E",
+    "qS8Xa_-VWyI"
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -90,13 +94,17 @@ export const SpotifyLayout = () => {
 
   const handlePreviousTrack = () => {
     if (player) {
-      player.previousVideo();
+      const prevIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+      setCurrentVideoIndex(prevIndex);
+      player.loadVideoById(videos[prevIndex]);
     }
   };
 
   const handleNextTrack = () => {
     if (player) {
-      player.nextVideo();
+      const nextIndex = (currentVideoIndex + 1) % videos.length;
+      setCurrentVideoIndex(nextIndex);
+      player.loadVideoById(videos[nextIndex]);
     }
   };
 
@@ -123,16 +131,16 @@ export const SpotifyLayout = () => {
 
           {/* Playlists */}
           <div className="flex-1">
-            <h2 className="text-gray-400 text-sm mb-4">PLAYLISTS</h2>
+            <h2 className="text-gray-400 text-sm mb-4">PORTFÓLIO</h2>
             <div className="space-y-3">
-              {playlists.map((playlist) => (
+              {portfolioSections.map((section) => (
                 <motion.button
-                  key={playlist}
+                  key={section}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="text-gray-400 hover:text-white transition-colors text-sm w-full text-left"
                 >
-                  {playlist}
+                  {section}
                 </motion.button>
               ))}
             </div>
@@ -269,13 +277,11 @@ export const SpotifyLayout = () => {
 
           <div className="absolute top-[-380px] opacity-0">
             <YouTube
-              videoId=""
+              videoId={videos[currentVideoIndex]}
               opts={{
                 width: "1",
                 height: "1",
                 playerVars: {
-                  listType: "playlist",
-                  list: playlistId,
                   autoplay: 0,
                 },
               }}
