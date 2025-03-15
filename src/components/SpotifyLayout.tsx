@@ -32,14 +32,44 @@ const playlists = [
 
 export const SpotifyLayout = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [play, { stop }] = useSound("/music.mp3", {
-    volume: 0.5,
-    onend: () => setIsPlaying(false),
+  const [volume, setVolume] = useState(0.5);
+  const [progress, setProgress] = useState(0);
+  const [play, { stop, sound }] = useSound("/music.mp3", {
+    volume,
+    onend: () => {
+      setIsPlaying(false);
+      setProgress(0);
+    },
   });
 
   useEffect(() => {
-    return () => stop();
-  }, [stop]);
+    if (sound) {
+      const interval = setInterval(() => {
+        const time = sound.seek();
+        const duration = sound.duration();
+        setProgress((time / duration) * 100);
+      }, 100);
+
+      return () => {
+        clearInterval(interval);
+        stop();
+      };
+    }
+  }, [sound, stop]);
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+  };
+
+  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (sound) {
+      const newProgress = parseFloat(e.target.value);
+      const duration = sound.duration();
+      sound.seek((newProgress / 100) * duration);
+      setProgress(newProgress);
+    }
+  };
 
   return (
     <div className="h-screen bg-[#121212] text-white flex flex-col">
@@ -193,17 +223,32 @@ export const SpotifyLayout = () => {
               <IconRepeat size={20} />
             </motion.button>
           </div>
-          <div className="w-full max-w-[600px] h-1 bg-[#4d4d4d] rounded-full">
-            <div className="w-1/3 h-full bg-white rounded-full" />
+          <div className="w-full max-w-[600px] flex items-center gap-2 text-xs text-gray-400">
+            <span>{sound ? Math.floor(sound.seek()) : "0:00"}</span>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={progress}
+              onChange={handleProgressChange}
+              className="w-full h-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+            />
+            <span>{sound ? Math.floor(sound.duration()) : "0:00"}</span>
           </div>
         </div>
 
         {/* Volume */}
         <div className="w-[300px] flex items-center justify-end gap-2">
           <IconVolume size={20} className="text-gray-400" />
-          <div className="w-24 h-1 bg-[#4d4d4d] rounded-full">
-            <div className="w-1/2 h-full bg-white rounded-full" />
-          </div>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="w-24 h-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+          />
         </div>
       </div>
     </div>
