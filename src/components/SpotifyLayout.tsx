@@ -81,46 +81,51 @@ export const SpotifyLayout = () => {
         </div>
 
         {/* Main content area */}
-        <div className="flex-1 bg-gradient-to-b from-[#535353] to-[#121212] p-8 overflow-y-auto">
-          {/* Profile section */}
-          <div className="flex items-center gap-4 mb-8">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="w-[100px] h-[100px] rounded-full overflow-hidden"
-            >
-              <img
-                src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
-                alt="supr1se"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-            <div>
-              <h1 className="text-3xl font-bold mb-2">supr1se</h1>
-              <p className="text-gray-400">@supr1se • 777</p>
-            </div>
-          </div>
-
-          {/* Current Album */}
-          <h2 className="text-2xl font-bold mb-6">Tocando Agora</h2>
+        <div className="flex-1 bg-gradient-to-b from-[#535353] to-[#121212] overflow-y-auto flex flex-col items-center justify-center p-8">
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="bg-[#181818] p-6 rounded-lg hover:bg-[#282828] transition-colors max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl w-full"
           >
-            <div className="aspect-square mb-6 rounded-lg overflow-hidden shadow-2xl">
-              <img
-                src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
-                alt="Capa do álbum"
-                className="w-full h-full object-cover"
-              />
+            <div className="flex items-center gap-6 mb-12">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="w-[120px] h-[120px] rounded-full overflow-hidden"
+              >
+                <img
+                  src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
+                  alt="supr1se"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+              <div>
+                <h1 className="text-4xl font-bold mb-2">supr1se</h1>
+                <p className="text-gray-400 text-lg">@supr1se • 777</p>
+              </div>
             </div>
-            <h3 className="text-2xl font-bold mb-2">supr1se - Faixa Atual</h3>
-            <p className="text-gray-400">Álbum • 2024</p>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
+            >
+              <div className="aspect-square w-full">
+                <img
+                  src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
+                  alt="Capa do álbum"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="text-3xl font-bold mb-2">supr1se - Faixa Atual</h3>
+                <p className="text-gray-400 text-lg">Álbum • 2024</p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
 
       {/* Player */}
-      <div className="h-24 bg-black border-t border-[#282828] px-4 flex items-center justify-between">
+      <div className="h-28 bg-black border-t border-[#282828] px-8 flex items-center justify-between">
         {/* Current track */}
         <div className="flex items-center gap-4 w-[300px]">
           <div className="w-14 h-14 rounded overflow-hidden">
