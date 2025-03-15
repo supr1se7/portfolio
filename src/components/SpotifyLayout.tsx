@@ -215,7 +215,7 @@ export const SpotifyLayout = () => {
             >
               <div className="w-[400px] h-[400px] mx-auto">
                 <img
-                  src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/4245999e73ecddf5ae5c3473a6bf2351.jpg"
+                  src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/1754d86dccb714f079f6b6cd3cf8a64f.jpg"
                   alt="Capa do álbum"
                   className="w-full h-full object-cover rounded-md"
                 />
