@@ -87,10 +87,10 @@ export const SpotifyLayout = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl w-full"
           >
-            <div className="flex items-center gap-6 mb-12">
+            <div className="flex items-center gap-4 mb-8">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="w-[120px] h-[120px] rounded-full overflow-hidden"
+                className="w-[80px] h-[80px] rounded-full overflow-hidden"
               >
                 <img
                   src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
@@ -108,16 +108,16 @@ export const SpotifyLayout = () => {
               whileHover={{ scale: 1.02 }}
               className="bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
             >
-              <div className="aspect-square w-full">
+              <div className="h-[400px]">
                 <img
                   src="https://pre-built-images.s3.amazonaws.com/webapp-uploads/e2e5a40f009e8d6c5fd0e63cb7eb9b71.jpg"
                   alt="Capa do álbum"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-8">
-                <h3 className="text-3xl font-bold mb-2">supr1se - Faixa Atual</h3>
-                <p className="text-gray-400 text-lg">Álbum • 2024</p>
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-1">supr1se - Faixa Atual</h3>
+                <p className="text-gray-400">Álbum • 2024</p>
               </div>
             </motion.div>
           </motion.div>
