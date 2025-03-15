@@ -83,6 +83,21 @@ export const SpotifyLayout = () => {
 
   const onStateChange = (event: any) => {
     setIsPlaying(event.data === 1);
+    if (event.data === 0) { // Video ended
+      handleNextTrack();
+    }
+  };
+
+  const handlePreviousTrack = () => {
+    if (player) {
+      player.previousVideo();
+    }
+  };
+
+  const handleNextTrack = () => {
+    if (player) {
+      player.nextVideo();
+    }
   };
 
   return (
@@ -198,6 +213,7 @@ export const SpotifyLayout = () => {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={handlePreviousTrack}
               className="text-gray-400 hover:text-white transition-colors"
             >
               <IconPlayerSkipBack size={20} />
@@ -225,6 +241,7 @@ export const SpotifyLayout = () => {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={handleNextTrack}
               className="text-gray-400 hover:text-white transition-colors"
             >
               <IconPlayerSkipForward size={20} />
