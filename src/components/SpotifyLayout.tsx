@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CreativeLoader } from "./CreativeLoader";
 import {
   IconHome,
   IconSearch,
@@ -38,6 +39,7 @@ export const SpotifyLayout = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const videos = [
     "9Zmpqwcmy2E",
@@ -82,7 +84,11 @@ export const SpotifyLayout = () => {
   };
 
   const onReady = (event: any) => {
-    setPlayer(event.target);
+    const player = event.target;
+    setPlayer(player);
+    player.setVolume(volume * 100);
+    player.playVideo();
+    setIsLoading(false);
   };
 
   const onStateChange = (event: any) => {
@@ -110,6 +116,7 @@ export const SpotifyLayout = () => {
 
   return (
     <div className="h-screen bg-[#121212] text-white flex flex-col">
+      {isLoading && <CreativeLoader />}
       {/* Main content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
