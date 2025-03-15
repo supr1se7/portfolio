@@ -32,43 +32,57 @@ const playlists = [
 
 export const SpotifyLayout = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState(50);
   const [progress, setProgress] = useState(0);
-  const [play, { stop, sound }] = useSound("/music.mp3", {
-    volume,
-    onend: () => {
-      setIsPlaying(false);
-      setProgress(0);
-    },
-  });
+  const [player, setPlayer] = useState<any>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const playlistId = "PL6a4NQi-gOKi7Z4Hq58TvaN8vwZhuHlaQ";
 
   useEffect(() => {
-    if (sound) {
-      const interval = setInterval(() => {
-        const time = sound.seek();
-        const duration = sound.duration();
-        setProgress((time / duration) * 100);
-      }, 100);
+    const interval = setInterval(() => {
+      if (player && isPlaying) {
+        const current = player.getCurrentTime();
+        const total = player.getDuration();
+        setCurrentTime(current);
+        setDuration(total);
+        setProgress((current / total) * 100);
+      }
+    }, 1000);
 
-      return () => {
-        clearInterval(interval);
-        stop();
-      };
-    }
-  }, [sound, stop]);
+    return () => clearInterval(interval);
+  }, [player, isPlaying]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
+    const newVolume = parseInt(e.target.value);
     setVolume(newVolume);
+    if (player) {
+      player.setVolume(newVolume);
+    }
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (sound) {
+    if (player) {
       const newProgress = parseFloat(e.target.value);
-      const duration = sound.duration();
-      sound.seek((newProgress / 100) * duration);
+      const newTime = (newProgress / 100) * duration;
+      player.seekTo(newTime);
       setProgress(newProgress);
     }
+  };
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
+  const onReady = (event: any) => {
+    setPlayer(event.target);
+  };
+
+  const onStateChange = (event: any) => {
+    setIsPlaying(event.data === 1);
   };
 
   return (
@@ -192,12 +206,12 @@ export const SpotifyLayout = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => {
-                if (isPlaying) {
-                  stop();
-                  setIsPlaying(false);
-                } else {
-                  play();
-                  setIsPlaying(true);
+                if (player) {
+                  if (isPlaying) {
+                    player.pauseVideo();
+                  } else {
+                    player.playVideo();
+                  }
                 }
               }}
               className="w-8 h-8 rounded-full bg-white flex items-center justify-center"
@@ -224,7 +238,7 @@ export const SpotifyLayout = () => {
             </motion.button>
           </div>
           <div className="w-full max-w-[600px] flex items-center gap-2 text-xs text-gray-400">
-            <span>{sound ? Math.floor(sound.seek()) : "0:00"}</span>
+            <span>{formatTime(currentTime)}</span>
             <input
               type="range"
               min="0"
@@ -233,7 +247,24 @@ export const SpotifyLayout = () => {
               onChange={handleProgressChange}
               className="w-full h-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
             />
-            <span>{sound ? Math.floor(sound.duration()) : "0:00"}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
+
+          <div className="absolute top-[-380px] opacity-0">
+            <YouTube
+              videoId=""
+              opts={{
+                width: "1",
+                height: "1",
+                playerVars: {
+                  listType: "playlist",
+                  list: playlistId,
+                  autoplay: 0,
+                },
+              }}
+              onReady={onReady}
+              onStateChange={onStateChange}
+            />
           </div>
         </div>
 
